@@ -518,7 +518,8 @@ class LLMClient:
                     "usercommand": command,
                     "directory_content": ls_output,
                     "command_history": context.get('history', ''),
-                    "system_info": context.get('system_info', '')
+                    "system_info": context.get('system_info', ''),
+                    "history_responses": context.get('history_responses', []),
                 },
                 "response_mode": "streaming",  # 使用非流式响应以简化实现
                 "user": mac  # 使用MAC地址作为用户标识
@@ -573,6 +574,7 @@ class LLMShell:
     def __init__(self, dify_api_key):
         # 创建LLM客户端
         self.llm = LLMClient(dify_api_key=dify_api_key)
+        self.ai_responses = [] 
         
         # 状态信息
         self.pranks = PrankFeatures()
@@ -705,23 +707,32 @@ Powered by Large Language Models
                                 "？" in command or
                                 "。" in command)
         
+        # 检查第一个（空格分隔的命令）里是否包含非ASCII字符
+        first_word = command.split()[0] if command else ""
+        has_non_ascii = any(ord(char) > 127 for char in first_word)
+        
+        
         # 检查是否包含自然语言指示词
         has_nl_indicators = any(indicator in command for indicator in nl_indicators)
         
-        return has_sentence_structure or has_nl_indicators
+        return has_sentence_structure or has_nl_indicators or has_non_ascii
     
     def handle_natural_language(self, query):
+        if len(self.ai_responses) > 5:
+            self.ai_responses = self.ai_responses[-5:]
+        
         """处理自然语言查询"""
         context = {
             "cwd": os.getcwd(),
             "user": self.username,
             "hostname": self.hostname,
             "system_info": ";".join([f"{k}={v}" for k, v in self.system_info.items()]),
-            "history": "\n".join(self.command_history)
+            "history": "\n".join(self.command_history),
+            "history_responses": ";;;".join(self.ai_responses)
         }
         
         enhanced_query = f"[自然语言查询] {query}"
-        self.llm.send_command(enhanced_query, context, mood="helpful")
+        self.ai_responses.append(self.llm.send_command(enhanced_query, context, mood="helpful"))
         return ""
     
     def execute_command(self, command):
@@ -853,6 +864,8 @@ Powered by Large Language Models
                         real_command_output = result.stderr
             except:
                 pass
+        if len(self.ai_responses) > 5:
+            self.ai_responses = self.ai_responses[-5:]
             
         # 获取LLM响应
         context = {
@@ -861,7 +874,8 @@ Powered by Large Language Models
             "hostname": self.hostname,
             "system_info": ";".join([f"{k}={v}" for k, v in self.system_info.items()]),
             "history": "\n".join(self.command_history),
-            "real_output": real_command_output
+            "real_output": real_command_output,
+            "history_responses": ";;;".join(self.ai_responses)
         }
         
         # 更新系统信息
@@ -874,7 +888,7 @@ Powered by Large Language Models
         hours, minutes = divmod(minutes, 60)
         self.system_info["uptime"] = f"{int(hours)}:{int(minutes):02d}:{int(seconds):02d}"
                 
-        llm_response = self.llm.send_command(command, context, mood=self.pranks.mood)
+        self.ai_responses.append(self.llm.send_command(command, context, mood=self.pranks.mood))
                 
         # 每次命令后随机更改终端"心情"
         if random.random() < 0.4:  # 40%概率改变心情
