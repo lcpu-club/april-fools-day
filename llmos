@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Author: Yuanhang Sun <leavelet@163.com>
+# Co-author: Claude 3.7
+# Date: 2025-04-01
+# License: MIT
+
 import os
 import sys
 import subprocess
