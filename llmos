@@ -885,7 +885,7 @@ Powered by Large Language Models
     def show_llmos_help(self):
         """显示LLMOS帮助信息"""
         uptime = self.get_uptime()
-        help_text = rf"""
+        help_text = f"""
 \033[1mLLMOS Help - 智能操作系统使用指南\033[0m
 ====================================
 
@@ -978,7 +978,7 @@ CPU使用率: {self.system_info["cpu_usage"]}%
         issues_found = random.randint(1, 3)
         fixes_applied = random.randint(0, issues_found)
         
-        response = rf"""
+        response = f"""
 \033[1mLLMOS 智能日志分析\033[0m
 正在扫描系统日志...
 正在应用语义理解模型...
@@ -995,7 +995,7 @@ CPU使用率: {self.system_info["cpu_usage"]}%
             timestamp = datetime.datetime.now() - datetime.timedelta(minutes=random.randint(0, 120))
             response += f"{timestamp.strftime('%b %d %H:%M:%S')} {log_entry}\n"
             
-        response += rf"""
+        response += f"""
 \033[1m智能分析:\033[0m
 1. 系统整体健康状况: {'良好' if issues_found <= 1 else '需要注意'}
 2. 性能瓶颈: {'未检测到' if random.random() > 0.3 else '检测到内存使用异常'}
@@ -1020,7 +1020,7 @@ CPU使用率: {self.system_info["cpu_usage"]}%
         uptime = self.get_uptime()
         load_avg = f"{random.uniform(0.1, 0.8):.2f}, {random.uniform(0.1, 0.5):.2f}, {random.uniform(0.1, 0.3):.2f}"
         
-        result = rf"""
+        result = f"""
 top - {now} up {uptime}, 1 user, load average: {load_avg}
 Tasks: 89 total,   1 running,  88 sleeping,   0 stopped,   0 zombie
 %Cpu(s):  {self.system_info["cpu_usage"]:.1f} us,  {random.uniform(0.5, 2.0):.1f} sy,  0.0 ni, {100-self.system_info["cpu_usage"]-random.uniform(0.5, 5.0):.1f} id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
@@ -1125,7 +1125,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
         files_created = random.randint(4, 15)
         lines_generated = random.randint(files_created * 30, files_created * 100)
         
-        response = rf"""
+        response = f"""
 \033[1mLLMOS 智能代码生成器\033[0m
 创建项目: {project_name}
 使用模板: {template}
@@ -1143,7 +1143,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
         
         # 根据不同的模板类型添加不同的文件结构
         if template == "web":
-            response += rf"""├── src/
+            response += f"""├── src/
 │   ├── index.html
 │   ├── css/
 │   │   └── style.css
@@ -1153,7 +1153,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── package.json
 └── webpack.config.js"""
         elif template == "api":
-            response += rf"""├── src/
+            response += f"""├── src/
 │   ├── controllers/
 │   ├── models/
 │   ├── routes/
@@ -1163,7 +1163,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── package.json
 └── server.js"""
         elif template == "cli":
-            response += rf"""├── src/
+            response += f"""├── src/
 │   ├── commands/
 │   ├── utils/
 │   └── index.js
@@ -1172,7 +1172,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── package.json
 └── README.md"""
         elif template == "data-science":
-            response += rf"""├── data/
+            response += f"""├── data/
 ├── notebooks/
 │   └── exploration.ipynb
 ├── src/
@@ -1182,7 +1182,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── requirements.txt
 └── main.py"""
         elif template == "game":
-            response += rf"""├── src/
+            response += f"""├── src/
 │   ├── engine/
 │   ├── assets/
 │   │   ├── images/
@@ -1192,7 +1192,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── build/
 └── main.js"""
         elif template == "mobile":
-            response += rf"""├── src/
+            response += f"""├── src/
 │   ├── screens/
 │   ├── components/
 │   ├── navigation/
@@ -1203,7 +1203,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── package.json
 └── App.js"""
         elif template == "ai":
-            response += rf"""├── data/
+            response += f"""├── data/
 ├── models/
 ├── src/
 │   ├── training/
@@ -1214,7 +1214,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── requirements.txt
 └── main.py"""
         elif template == "blockchain":
-            response += rf"""├── contracts/
+            response += f"""├── contracts/
 │   └── {project_name.capitalize()}.sol
 ├── src/
 │   ├── blockchain/
@@ -1225,7 +1225,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── truffle-config.js
 └── package.json"""
         elif template == "iot":
-            response += rf"""├── device/
+            response += f"""├── device/
 │   ├── firmware/
 │   └── sensors/
 ├── server/
@@ -1236,7 +1236,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: LLM-Term
 ├── config.json
 └── main.py"""
             
-        response += rf"""
+        response += f"""
 
 \033[1m智能增强功能:\033[0m
 - 代码内置AI辅助注释，解释复杂逻辑
@@ -1288,7 +1288,7 @@ llm-explain  # 获取代码解释
         if "start" in command:
             session_name = command.split("start")[1].strip() if len(command.split("start")) > 1 else f"session-{random.randint(1000, 9999)}"
             
-            response = rf"""
+            response = f"""
 \033[1mLLMOS 实时协作终端\033[0m
 创建新的协作会话: {session_name}
 会话ID: {session_id}
@@ -1318,7 +1318,7 @@ llm-explain  # 获取代码解释
         elif "join" in command:
             session_to_join = command.split("join")[1].strip() if len(command.split("join")) > 1 else session_id
             
-            response = rf"""
+            response = f"""
 \033[1mLLMOS 实时协作终端\033[0m
 正在加入会话: {session_to_join}
 验证访问权限...
@@ -1353,7 +1353,7 @@ llm-explain  # 获取代码解释
                 f"{random.choice(online_users)}: 我觉得我们应该先优化数据库查询"
             ]
             
-            response = rf"""
+            response = f"""
 \033[1mLLMOS 协作聊天\033[0m
 已连接到聊天服务器
 当前在线: {', '.join(online_users)}
@@ -1366,7 +1366,7 @@ llm-explain  # 获取代码解释
         else:
             online_users = random.sample(users, random.randint(2, 4))
             
-            response = rf"""
+            response = f"""
 \033[1mLLMOS 实时协作终端\033[0m
 协作选项:
 1. 'collab start <会话名>' - 开始新的协作会话
@@ -1416,7 +1416,7 @@ LLMOS更新完成，已添加45个新的智能包
 """
         elif "install" in command:
             package = command.split("install")[1].strip().split()[0] if len(command.split("install")) > 1 else "unknown-package"
-            return rf"""
+            return f"""
 正在安装 {package}...
 获取包元数据和依赖关系...
 分析用户使用模式以优化安装...
@@ -1436,7 +1436,7 @@ LLMOS更新完成，已添加45个新的智能包
 """
         elif "search" in command:
             search_term = command.split("search")[1].strip() if len(command.split("search")) > 1 else ""
-            return rf"""
+            return f"""
 搜索中: "{search_term}"
 
 llm-{search_term} - LLMOS智能{search_term}管理工具
@@ -1468,7 +1468,7 @@ collaborative-{search_term} - 团队协作{search_term}环境
             ]
             recommended = random.sample(packages, 3)
             
-            return rf"""
+            return f"""
 基于您的使用习惯，LLMOS智能推荐以下包:
 
 1. {recommended[0]} - 根据您的编程模式量身定制的智能工具
@@ -1489,7 +1489,7 @@ collaborative-{search_term} - 团队协作{search_term}环境
     def get_llmos_stats(self):
         """显示LLMOS统计信息"""
         uptime = self.get_uptime()
-        stats = rf"""
+        stats = f"""
 \033[1mLLMOS 系统统计信息\033[0m
 ====================================
 
@@ -1546,7 +1546,7 @@ collaborative-{search_term} - 团队协作{search_term}环境
             time.sleep(0.2)
             
         progress = random.randint(10, 30)
-        response += rf"""
+        response += f"""
 学习模式已激活!
 
 当前状态:
@@ -1575,7 +1575,7 @@ collaborative-{search_term} - 团队协作{search_term}环境
         if self.command_history:
             recent_commands = self.command_history[-10:]
             
-        insights = rf"""
+        insights = f"""
 \033[1mLLMOS 个性化洞察\033[0m
 ====================================
 
@@ -1645,7 +1645,7 @@ LLMOS智能分析发现您可以:
         new_version = f"1.{random.randint(1, 9)}.{random.randint(0, 9)}"
         self.system_info["version"] = new_version
         
-        response += rf"""
+        response += f"""
 \033[1m更新完成!\033[0m
 
 LLMOS已成功更新到版本 {new_version}
@@ -1679,7 +1679,7 @@ LLMOS已成功更新到版本 {new_version}
         
         retention = random.choice(["30天", "60天", "90天", "永久"])
         
-        privacy = rf"""
+        privacy = f"""
 \033[1mLLMOS 隐私设置\033[0m
 ====================================
 
@@ -1692,7 +1692,7 @@ LLMOS高度重视您的隐私。所有数据处理均在本地进行，不会离
             emoji = "🟢" if status == "启用" else "🟡" if status == "匿名化" else "🔴"
             privacy += f"{emoji} {data_type}: {status}\n"
             
-        privacy += rf"""
+        privacy += f"""
 \033[1m数据保留:\033[0m
 - 数据保留期限: {retention}
 - 自动净化: {'启用' if random.random() > 0.5 else '禁用'}
