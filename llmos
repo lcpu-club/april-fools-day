@@ -485,6 +485,8 @@ class LLMClient:
                 # 如果字符数大于2000，使用ls
                 if len(ls_output) > 2000:
                     ls_output = subprocess.check_output(["ls"], universal_newlines=True)
+                if len(ls_output) > 6000:
+                    ls_output = ls_output[:6000]  # 限制输出长度
             except:
                 ls_output = "无法获取目录内容"
             
