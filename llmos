@@ -17,6 +17,8 @@ import datetime
 import uuid
 import platform
 
+linebreak = '\n'
+
 if platform.system() != "Windows":
     try:
         import readline
@@ -1373,7 +1375,7 @@ llm-explain  # 获取代码解释
 当前在线: {', '.join(online_users)}
 
 \033[1m最近消息:\033[0m
-{''.join(f"{m}\n" for m in messages)}
+{''.join(f"{m}{linebreak}" for m in messages)}
 
 \033[1m[输入聊天消息或使用 /exit 返回终端]\033[0m
 """
